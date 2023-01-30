@@ -6,7 +6,7 @@ import authController from '../controllers/authController.js';
 
 export const authRouter = new express.Router();
 
-authRouter.post('/registration', catchError(authController.register));
+authRouter.post('/registration', authController.register);
 
 authRouter.get('/activation/:activationToken',
   catchError(authController.activate));

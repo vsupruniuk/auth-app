@@ -26,7 +26,10 @@ const getByEmail = (email) => {
 };
 
 const register = async(name, email, password) => {
+  console.log('service:', {name, email, password});
   const existingError = await getByEmail(email);
+
+  console.log('existing:', existingError);
 
   if (existingError) {
     throw ApiError.BadRequest('Email is already taken', {
@@ -36,6 +39,9 @@ const register = async(name, email, password) => {
 
   const activationToken = uuidv4();
   const hash = await bcrypt.hash(password, 10);
+
+  console.log('act token:', activationToken);
+  console.log('hash', hash);
 
   await User.create({
     name, email, password: hash, activationToken,

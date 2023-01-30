@@ -14,12 +14,15 @@ import socialNetworksAuthService from
 
 const register = async(req, res, next) => {
   const { name, email, password } = req.body;
+  console.log('UserData:', {name, email, password});
 
   const errors = {
     name: validation.validateName(name),
     email: validation.validateEmail(email),
     password: validation.validatePassword(password),
   };
+
+  console.log('errors', errors);
 
   if (errors.name || errors.email || errors.password) {
     throw ApiError.BadRequest('Validation error', errors);
