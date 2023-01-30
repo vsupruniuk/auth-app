@@ -21,7 +21,7 @@ app.post('/add', async(req, res) => {
 })
 
 app.get('/get-name/:name', async(req, res) => {
-  const { name } = req.query
+  const { name } = req.params
 
   const foundName = await Name.findOne({
     where: {
