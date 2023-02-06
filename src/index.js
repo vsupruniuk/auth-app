@@ -12,7 +12,7 @@ const app = express();
 const PORT = process.env.PORT || 3002;
 
 app.use(cors({
-  origin: process.env.CLIENT_URL,
+  origin: process.env.CLIENT_ORIGIN,
   credentials: true,
 }));
 app.use(cookieParser());

@@ -26,10 +26,7 @@ const getByEmail = (email) => {
 };
 
 const register = async(name, email, password) => {
-  console.log('service:', {name, email, password});
   const existingError = await getByEmail(email);
-
-  console.log('existing:', existingError);
 
   if (existingError) {
     throw ApiError.BadRequest('Email is already taken', {
@@ -40,10 +37,7 @@ const register = async(name, email, password) => {
   const activationToken = uuidv4();
   const hash = await bcrypt.hash(password, 10);
 
-  console.log('act token:', activationToken);
-  console.log('hash', hash);
-
-  await User.create({
+  await createUser({
     name, email, password: hash, activationToken,
   });
 
@@ -82,9 +76,29 @@ const checkIfAuthorized = async(refreshToken) => {
   return userData;
 };
 
-const normalize = ({ id, name, email }) => {
+const createUser = ({
+  name,
+  email,
+  password = null,
+  activationToken = null,
+  isGoogleConnected = false,
+  isGithubConnected = false,
+  isFacebookConnected = false,
+}) => {
+  return User.create({
+    name,
+    email,
+    password,
+    activationToken,
+    isGoogleConnected,
+    isGithubConnected,
+    isFacebookConnected,
+  });
+};
+
+const normalize = ({ id, name, email, isGoogleConnected }) => {
   return {
-    id, name, email,
+    id, name, email, isGoogleConnected,
   };
 };
 
@@ -94,5 +108,6 @@ export default {
   register,
   normalize,
   checkIfAuthorized,
+  createUser,
   reset,
 };

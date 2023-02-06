@@ -6,7 +6,7 @@ import authController from '../controllers/authController.js';
 
 export const authRouter = new express.Router();
 
-authRouter.post('/registration', authController.register);
+authRouter.post('/registration', catchError(authController.register));
 
 authRouter.get('/activation/:activationToken',
   catchError(authController.activate));
@@ -23,10 +23,10 @@ authRouter.post('/change-email', catchError(authController.changeEmail));
 authRouter.post('/change-password', catchError(authController.changePassword));
 
 authRouter.get('/authenticate/google',
-  catchError(authController.loginWithGoogle));
+  catchError(authController.authWithGoogle));
 
-authRouter.get('/authenticate/github',
-  catchError(authController.loginWithGithub));
+authRouter.get('/connect/google',
+  catchError(authController.connectGoogle));
 
-authRouter.get('/authenticate/facebook',
-  catchError(authController.loginWithFacebook));
+authRouter.get('/disconnect-google',
+  catchError(authController.disconnectGoogle));
