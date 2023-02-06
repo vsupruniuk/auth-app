@@ -7,4 +7,4 @@ import './models/GoogleData.js';
 import './models/GithubData.js';
 import { sequelize } from './utils/db.js';
 
-sequelize.sync();
+sequelize.sync({ force: true });
