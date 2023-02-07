@@ -70,6 +70,7 @@ const login = async(req, res, next) => {
 
 const refresh = async(req, res, next) => {
   const { refreshToken } = req.cookies;
+
   const userData = jwtService.validateRefreshToken(refreshToken);
 
   if (!userData) {
@@ -105,7 +106,7 @@ const sendAuthentication = async(res, user) => {
   const accessToken = jwtService.generateAccessToken(userData);
   const refreshToken = jwtService.generateRefreshToken(userData);
 
-  await tokenService.save(user.id, refreshToken);
+  await tokenService.save(userData.id, refreshToken);
 
   res.cookie('refreshToken', refreshToken, {
     maxAge: 30 * 24 * 60 * 60 * 1000,
